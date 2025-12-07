@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+    background: #F5F5F5;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -25,7 +25,7 @@ body {
     background: white;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     min-height: 600px;
 }
 
@@ -34,7 +34,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: #f8f9fc;
+    background: white;
 }
 
 .logo-section {
@@ -46,12 +46,12 @@ body {
     width: 80px;
     height: 80px;
     margin: 0 auto 15px;
-    background: white;
+    background: linear-gradient(135deg, #008080 0%, #20B2AA 100%);
     border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.2);
 }
 
 .logo-icon svg {
@@ -60,15 +60,15 @@ body {
 }
 
 .logo-section h2 {
-    font-size: 18px;
-    color: #333;
+    font-size: 20px;
+    color: #008080;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
 .login-form-wrapper h3 {
     font-size: 22px;
-    color: #333;
+    color: #333333;
     margin-bottom: 25px;
     font-weight: 600;
 }
@@ -115,32 +115,34 @@ body {
 .form-group input {
     width: 100%;
     padding: 14px 18px;
-    border: 2px solid #e1e4e8;
-    border-radius: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     font-size: 14px;
     transition: all 0.3s;
-    background: white;
+    background: #F5F5F5;
+    color: #333333;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #5b6ee1;
-    box-shadow: 0 0 0 4px rgba(91, 110, 225, 0.1);
+    border-color: #008080;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
+    background: white;
 }
 
 .form-group input::placeholder {
-    color: #a0a0a0;
+    color: #999;
 }
 
 .btn-login {
     width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #5b6ee1 0%, #7c5ac2 100%);
+    padding: 14px;
+    background: linear-gradient(135deg, #008080 0%, #20B2AA 100%);
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 700;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
     letter-spacing: 0.5px;
     cursor: pointer;
     transition: all 0.3s;
@@ -148,8 +150,9 @@ body {
 }
 
 .btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(91, 110, 225, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 128, 128, 0.35);
+    background: linear-gradient(135deg, #006666 0%, #1a9999 100%);
 }
 
 .btn-login:active {
@@ -162,7 +165,7 @@ body {
 }
 
 .login-footer a {
-    color: #5b6ee1;
+    color: #008080;
     text-decoration: none;
     font-size: 13px;
     font-weight: 500;
@@ -170,17 +173,19 @@ body {
 
 .login-footer a:hover {
     text-decoration: underline;
+    color: #20B2AA;
 }
 
 .copyright {
     text-align: center;
-    color: #888;
+    color: #333333;
     font-size: 11px;
     margin-top: 30px;
+    opacity: 0.6;
 }
 
 .login-right {
-    background: linear-gradient(135deg, #5b6ee1 0%, #7c5ac2 100%);
+    background: linear-gradient(135deg, #008080 0%, #20B2AA 100%);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -188,127 +193,38 @@ body {
     justify-content: center;
 }
 
-.illustration {
+.image-overlay {
     width: 100%;
     height: 100%;
     position: relative;
-    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+}
+
+.laundry-image {
+    width: 85%;
+    height: auto;
+    max-width: 500px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
 }
 
 .badge {
     position: absolute;
-    top: 40px;
-    right: 40px;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    padding: 12px 24px;
-    border-radius: 25px;
+    top: 35px;
+    right: 35px;
+    background: rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(8px);
+    padding: 10px 22px;
+    border-radius: 20px;
     color: white;
     font-weight: 600;
-    font-size: 14px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.illustration-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.person-walking {
-    width: 200px;
-    height: 300px;
-    position: relative;
-    animation: walking 3s ease-in-out infinite;
-}
-
-@keyframes walking {
-    0%, 100% {
-        transform: translateX(-20px);
-    }
-    50% {
-        transform: translateX(20px);
-    }
-}
-
-.person {
-    width: 100px;
-    height: 180px;
-    background: linear-gradient(180deg, #ff6b6b 0%, #ff8787 100%);
-    border-radius: 50px 50px 0 0;
-    position: relative;
-    margin: 0 auto;
-}
-
-.person::before {
-    content: '';
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: #ffb3b3;
-    border-radius: 50%;
-    top: -30px;
-    left: 25px;
-}
-
-.person::after {
-    content: '';
-    position: absolute;
-    width: 80px;
-    height: 100px;
-    background: #4a5568;
-    border-radius: 0 0 40px 40px;
-    bottom: -100px;
-    left: 10px;
-}
-
-.floating-items {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.item {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(5px);
-}
-
-.item-1 {
-    width: 80px;
-    height: 80px;
-    top: 20%;
-    left: 15%;
-    animation: float 4s ease-in-out infinite;
-}
-
-.item-2 {
-    width: 100px;
-    height: 100px;
-    bottom: 25%;
-    left: 10%;
-    animation: float 5s ease-in-out infinite 1s;
-}
-
-.item-3 {
-    width: 70px;
-    height: 70px;
-    bottom: 30%;
-    right: 15%;
-    animation: float 4.5s ease-in-out infinite 0.5s;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        transform: translateY(-20px) scale(1.05);
-    }
+    font-size: 13px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    z-index: 3;
 }
 
 @media (max-width: 768px) {

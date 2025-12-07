@@ -30,8 +30,8 @@ if (isset($_SESSION['success'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Sistem Laundry</title>
-    <link rel="stylesheet" href="../../assets/css/admin_auth.css">
+    <title>Login - E-Laundry</title>
+    <link rel="stylesheet" href="../../assets/css/admin_auth.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <div class="login-wrapper">
@@ -40,12 +40,12 @@ if (isset($_SESSION['success'])) {
                 <div class="logo-section">
                     <div class="logo-icon">
                         <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="12" y="20" width="40" height="32" rx="4" fill="#667eea"/>
-                            <circle cx="32" cy="36" r="8" fill="white" opacity="0.3"/>
-                            <path d="M20 16C20 14.8954 20.8954 14 22 14H42C43.1046 14 44 14.8954 44 16V20H20V16Z" fill="#764ba2"/>
+                            <rect x="12" y="20" width="40" height="32" rx="4" fill="white" opacity="0.9"/>
+                            <circle cx="32" cy="36" r="8" fill="white" opacity="0.5"/>
+                            <path d="M20 16C20 14.8954 20.8954 14 22 14H42C43.1046 14 44 14.8954 44 16V20H20V16Z" fill="white"/>
                         </svg>
                     </div>
-                    <h2>RUMAH LAUNDRY</h2>
+                    <h2>E-LAUNDRY</h2>
                 </div>
 
                 <div class="login-form-wrapper">
@@ -101,18 +101,8 @@ if (isset($_SESSION['success'])) {
             </div>
 
             <div class="login-right">
-                <div class="illustration">
-                    <div class="badge">Admin Laundry</div>
-                    <div class="illustration-content">
-                        <div class="person-walking">
-                            <div class="person"></div>
-                        </div>
-                        <div class="floating-items">
-                            <div class="item item-1"></div>
-                            <div class="item item-2"></div>
-                            <div class="item item-3"></div>
-                        </div>
-                    </div>
+                <div class="image-overlay">
+                    <img src="../../assets/img/laundry.png" alt="Laundry Illustration" class="laundry-image">
                 </div>
             </div>
         </div>
