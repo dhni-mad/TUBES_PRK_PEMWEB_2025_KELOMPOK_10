@@ -2,13 +2,18 @@
 session_start();
 
 if (isset($_SESSION['user_id'])) {
-    $role = $_SESSION['role'];
-    if ($role === 'admin') {
-        header('Location: ../admin/dashboard.php');
-    } elseif ($role === 'kasir') {
-        header('Location: ../cashier/new_transaction.php');
-    } elseif ($role === 'worker') {
-        header('Location: ../worker/task_list.php');
+    $user_type = $_SESSION['user_type'] ?? 'staff';
+    if ($user_type === 'staff') {
+        $role = $_SESSION['role'];
+        if ($role === 'admin') {
+            header('Location: ../admin/dashboard.php');
+        } elseif ($role === 'kasir') {
+            header('Location: ../cashier/new_transaction.php');
+        } elseif ($role === 'worker') {
+            header('Location: ../worker/task_list.php');
+        }
+    } else {
+        header('Location: ../public/index.php');
     }
     exit();
 }
@@ -30,7 +35,7 @@ if (isset($_SESSION['success'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - E-Laundry</title>
+    <title>Register - E-Laundry</title>
     <link rel="stylesheet" href="../../assets/css/admin_auth.css?v=<?php echo time(); ?>">
 </head>
 <body>
@@ -49,7 +54,7 @@ if (isset($_SESSION['success'])) {
                 </div>
 
                 <div class="login-form-wrapper">
-                    <h3>Login untuk akunmu</h3>
+                    <h3>Daftar Akun Pelanggan</h3>
 
                     <?php if ($error): ?>
                         <div class="alert alert-error">
@@ -64,14 +69,13 @@ if (isset($_SESSION['success'])) {
                     <?php endif; ?>
 
                     <form action="../../process/auth_handler.php" method="POST" class="login-form">
-                        <input type="hidden" name="action" value="login">
+                        <input type="hidden" name="action" value="register">
                         
                         <div class="form-group">
                             <input 
                                 type="text" 
-                                id="username" 
-                                name="username" 
-                                placeholder="Username"
+                                name="full_name" 
+                                placeholder="Nama Lengkap"
                                 required 
                                 autofocus
                             >
@@ -79,19 +83,64 @@ if (isset($_SESSION['success'])) {
 
                         <div class="form-group">
                             <input 
+                                type="text" 
+                                name="username" 
+                                placeholder="Username"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <input 
+                                type="email" 
+                                name="email" 
+                                placeholder="Email"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <input 
+                                type="tel" 
+                                name="no_hp" 
+                                placeholder="No. HP"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <textarea 
+                                name="alamat" 
+                                placeholder="Alamat Lengkap"
+                                rows="3"
+                                style="width: 100%; padding: 14px 18px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background: #F5F5F5; color: #333333; font-family: inherit; resize: vertical;"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <input 
                                 type="password" 
-                                id="password" 
                                 name="password" 
                                 placeholder="Password"
                                 required
                             >
                         </div>
 
-                        <button type="submit" class="btn-login">LOGIN</button>
+                        <div class="form-group">
+                            <input 
+                                type="password" 
+                                name="password_confirm" 
+                                placeholder="Konfirmasi Password"
+                                required
+                            >
+                        </div>
+
+                        <button type="submit" class="btn-login">DAFTAR</button>
                     </form>
 
                     <div class="login-footer">
-                        <p>Belum punya akun? <a href="register.php">Daftar di sini</a></p>
+                        <p>Sudah punya akun? <a href="login.php">Login di sini</a></p>
                         <p><a href="../public/index.php">Kembali ke Beranda</a></p>
                     </div>
                 </div>
