@@ -31,7 +31,7 @@ if (isset($_SESSION['success'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - E-Laundry</title>
-    <link rel="stylesheet" href="../../assets/css/admin_auth.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../../assets/css/auth.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <div class="login-wrapper">
