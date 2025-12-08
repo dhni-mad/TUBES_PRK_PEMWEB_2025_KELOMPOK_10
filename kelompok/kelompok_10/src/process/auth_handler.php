@@ -38,6 +38,13 @@ function handleLogin() {
                     LIMIT 1";
     
     $result_staff = mysqli_query($conn, $query_staff);
+    
+    if (!$result_staff) {
+        $_SESSION['error'] = 'Terjadi kesalahan sistem!';
+        header('Location: ../pages/auth/login.php');
+        exit();
+    }
+    
     $user = mysqli_fetch_assoc($result_staff);
 
     if ($user) {
@@ -77,32 +84,35 @@ function handleLogin() {
                        LIMIT 1";
     
     $result_customer = mysqli_query($conn, $query_customer);
-    $customer = mysqli_fetch_assoc($result_customer);
+    
+    if ($result_customer) {
+        $customer = mysqli_fetch_assoc($result_customer);
 
-    if ($customer) {
-        if (!$customer['is_active']) {
-            $_SESSION['error'] = 'Akun Anda tidak aktif!';
-            header('Location: ../pages/auth/login.php');
+        if ($customer) {
+            if (!$customer['is_active']) {
+                $_SESSION['error'] = 'Akun Anda tidak aktif!';
+                header('Location: ../pages/auth/login.php');
+                exit();
+            }
+
+            if (!password_verify($password, $customer['password'])) {
+                $_SESSION['error'] = 'Username atau password salah!';
+                header('Location: ../pages/auth/login.php');
+                exit();
+            }
+
+            $_SESSION['user_id'] = $customer['id'];
+            $_SESSION['username'] = $customer['username'];
+            $_SESSION['full_name'] = $customer['full_name'];
+            $_SESSION['email'] = $customer['email'];
+            $_SESSION['no_hp'] = $customer['no_hp'];
+            $_SESSION['alamat'] = $customer['alamat'];
+            $_SESSION['user_type'] = 'customer';
+            $_SESSION['login_time'] = time();
+
+            header('Location: ../pages/public/index.php');
             exit();
         }
-
-        if (!password_verify($password, $customer['password'])) {
-            $_SESSION['error'] = 'Username atau password salah!';
-            header('Location: ../pages/auth/login.php');
-            exit();
-        }
-
-        $_SESSION['user_id'] = $customer['id'];
-        $_SESSION['username'] = $customer['username'];
-        $_SESSION['full_name'] = $customer['full_name'];
-        $_SESSION['email'] = $customer['email'];
-        $_SESSION['no_hp'] = $customer['no_hp'];
-        $_SESSION['alamat'] = $customer['alamat'];
-        $_SESSION['user_type'] = 'customer';
-        $_SESSION['login_time'] = time();
-
-        header('Location: ../pages/public/index.php');
-        exit();
     }
 
     $_SESSION['error'] = 'Username atau password salah!';
