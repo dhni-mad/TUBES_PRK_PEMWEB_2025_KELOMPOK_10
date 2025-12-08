@@ -189,49 +189,36 @@ $page_title = "Kelola User";
             color: #6600CC;
         }
 
-        .status-toggle {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 26px;
-        }
-
-        .status-toggle input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
+        .badge-status {
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.3s;
-            border-radius: 26px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            background: none;
         }
 
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.3s;
-            border-radius: 50%;
+        .badge-active {
+            background: #D4EDDA;
+            color: #155724;
         }
 
-        input:checked + .toggle-slider {
-            background-color: #008080;
+        .badge-active:hover {
+            background: #C3E6CB;
+            transform: translateY(-1px);
         }
 
-        input:checked + .toggle-slider:before {
-            transform: translateX(24px);
+        .badge-inactive {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+
+        .badge-inactive:hover {
+            background: #F5C6CB;
+            transform: translateY(-1px);
         }
 
         .action-buttons {
@@ -499,13 +486,16 @@ $page_title = "Kelola User";
                                     </span>
                                 </td>
                                 <td>
-                                    <label class="status-toggle">
-                                        <input type="checkbox" 
-                                               <?php echo $user['is_active'] ? 'checked' : ''; ?>
-                                               onchange="toggleStatus(<?php echo $user['id']; ?>, this.checked)"
-                                               <?php echo $user['role'] === 'admin' ? 'disabled' : ''; ?>>
-                                        <span class="toggle-slider"></span>
-                                    </label>
+                                    <?php if ($user['role'] === 'admin'): ?>
+                                        <span class="badge-status badge-active" style="cursor: default;" title="Admin selalu aktif">
+                                            Aktif
+                                        </span>
+                                    <?php else: ?>
+                                        <button class="badge-status <?php echo $user['is_active'] ? 'badge-active' : 'badge-inactive'; ?>" 
+                                                onclick="toggleStatus(<?php echo $user['id']; ?>, <?php echo $user['is_active'] ? '0' : '1'; ?>, this)">
+                                            <?php echo $user['is_active'] ? 'Aktif' : 'Non-Aktif'; ?>
+                                        </button>
+                                    <?php endif; ?>
                                 </td>
                                 <td><?php echo date('d/m/Y', strtotime($user['created_at'])); ?></td>
                                 <td>
@@ -668,11 +658,11 @@ $page_title = "Kelola User";
         });
 
         // Fungsi toggle status user
-        function toggleStatus(userId, isActive) {
+        function toggleStatus(userId, isActive, buttonElement) {
             const formData = new FormData();
             formData.append('action', 'toggle_status');
             formData.append('user_id', userId);
-            formData.append('is_active', isActive ? 1 : 0);
+            formData.append('is_active', isActive);
             
             fetch('../../process/admin_handler.php', {
                 method: 'POST',
@@ -682,15 +672,22 @@ $page_title = "Kelola User";
             .then(data => {
                 if (data.success) {
                     showAlert('success', data.message);
+                    // Update tampilan badge tanpa reload
+                    if (isActive == 1) {
+                        buttonElement.className = 'badge-status badge-active';
+                        buttonElement.textContent = 'Aktif';
+                        buttonElement.onclick = function() { toggleStatus(userId, 0, this); };
+                    } else {
+                        buttonElement.className = 'badge-status badge-inactive';
+                        buttonElement.textContent = 'Non-Aktif';
+                        buttonElement.onclick = function() { toggleStatus(userId, 1, this); };
+                    }
                 } else {
                     showAlert('error', data.message);
-                    // Kembalikan toggle jika gagal
-                    location.reload();
                 }
             })
             .catch(error => {
                 showAlert('error', 'Terjadi kesalahan: ' + error.message);
-                location.reload();
             });
         }
 
