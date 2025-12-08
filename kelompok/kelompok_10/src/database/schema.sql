@@ -92,9 +92,9 @@ CREATE TABLE customers (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO users (username, password, full_name, role, is_active) VALUES
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin', TRUE),
-('kasir01', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kasir 1', 'kasir', TRUE),
-('worker01', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Petugas Cuci 1', 'worker', TRUE);
+('admin', '$2y$10$4SuWwALHx5yzZ/l74zbqiQ0H0CpVOHUcSDF2UTantLpQUAVE31MDG', 'Administrator', 'admin', TRUE),
+('kasir01', '$2y$10$4SuWwALHx5yzZ/l74zbqiQ0H0CpVOHUcSDF2UTantLpQUAVE31MDG', 'Kasir 1', 'kasir', TRUE),
+('worker01', '$2y$10$4SuWwALHx5yzZ/l74zbqiQ0H0CpVOHUcSDF2UTantLpQUAVE31MDG', 'Petugas Cuci 1', 'worker', TRUE);
 
 INSERT INTO packages (nama_paket, deskripsi, harga_per_qty, satuan, estimasi_hari) VALUES
 ('Cuci Komplit', 'Cuci, Kering, Setrika, dan Parfum', 6000.00, 'kg', 3),
