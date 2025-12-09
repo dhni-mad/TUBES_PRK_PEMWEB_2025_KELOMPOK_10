@@ -1,0 +1,111 @@
+/* =============================== */
+/* worker.css                      */
+/* Gaya untuk Petugas (Worker Role) */
+/* =============================== */
+
+/* --- 1. GAYA DASAR LAYOUT --- */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: #f4f7f9; /* Warna latar belakang halaman utama */
+    margin: 0; 
+    display: flex; /* Untuk layout sidebar dan konten */
+    min-height: 100vh; 
+}
+
+/* --- 2. GAYA SIDEBAR UTAMA --- */
+.sidebar { 
+    width: 250px; 
+    /* Warna Admin: Hijau Teal Gelap */
+    background-color: #038472; 
+    color: white; 
+    padding: 20px 0; 
+    position: sticky; 
+    top: 0; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    font-size: 0.95em; 
+}
+
+/* --- 3. GAYA HEADER SIDEBAR --- */
+.sidebar-header {
+    text-align: center;
+    padding: 0 20px 20px; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+}
+
+.sidebar-header h1 {
+    margin: 5px 0 0;
+    font-size: 1.5em; 
+    font-weight: 600;
+}
+
+.role-caption {
+    color: rgba(255, 255, 255, 0.7); 
+    font-size: 0.8em;
+    margin: 0;
+}
+
+.header-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+/* --- 4. GAYA NAVIGASI (LINK) --- */
+.sidebar nav {
+    flex-grow: 1; 
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s, border-left 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: rgba(0, 0, 0, 0.1); 
+}
+
+.sidebar-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+}
+
+/* Link Aktif (Gaya Konsisten dengan Admin) */
+.sidebar a.active {
+    background-color: rgba(0, 0, 0, 0.15); 
+    /* Garis tebal vertikal di kiri */
+    border-left: 5px solid white; 
+    padding-left: 15px; /* Sesuaikan padding */
+}
+
+/* --- 5. GAYA FOOTER (LOGOUT) --- */
+.sidebar-footer {
+    padding: 10px 0 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 12px 20px;
+    transition: background-color 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b; /* Merah untuk hover logout */
+}
+
+/* Penyesuaian ikon di tombol logout */
+.btn-logout .sidebar-icon {
+    margin-right: 8px;
+}
