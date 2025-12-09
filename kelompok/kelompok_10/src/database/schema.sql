@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS laundry_system;
-USE laundry_system;
+use laundry_system;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -1,18 +1,17 @@
-/* =============================== */
-/* worker.css                      */
-/* Gaya untuk Petugas (Worker Role) */
-/* =============================== */
+/* ==================================== */
+/* 1. BASE LAYOUT & SIDEBAR STYLING     */
+/* ==================================== */
 
-/* --- 1. GAYA DASAR LAYOUT --- */
+/* Reset Body dan Flex Container */
 body { 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    background-color: #f4f7f9; /* Warna latar belakang halaman utama */
+    background-color: #f4f7f9; 
     margin: 0; 
-    display: flex; /* Untuk layout sidebar dan konten */
-    min-height: 100vh; 
+    display: flex; 
+    min-height: 100vh; /* Memastikan body mengisi seluruh viewport */
 }
 
-/* --- 2. GAYA SIDEBAR UTAMA --- */
+/* Kontainer Sidebar Utama */
 .sidebar { 
     width: 250px; 
     /* Warna Admin: Hijau Teal Gelap */
@@ -28,10 +27,10 @@ body {
     font-size: 0.95em; 
 }
 
-/* --- 3. GAYA HEADER SIDEBAR --- */
+/* Header (Logo & Nama Aplikasi) */
 .sidebar-header {
     text-align: center;
-    padding: 0 20px 20px; 
+    padding: 0 20px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 10px;
 }
@@ -43,7 +42,7 @@ body {
 }
 
 .role-caption {
-    color: rgba(255, 255, 255, 0.7); 
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.8em;
     margin: 0;
 }
@@ -54,7 +53,7 @@ body {
     margin-bottom: 5px;
 }
 
-/* --- 4. GAYA NAVIGASI (LINK) --- */
+/* Navigasi Link */
 .sidebar nav {
     flex-grow: 1; 
 }
@@ -69,7 +68,7 @@ body {
 }
 
 .sidebar a:hover {
-    background-color: rgba(0, 0, 0, 0.1); 
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-icon {
@@ -78,15 +77,14 @@ body {
     margin-right: 12px;
 }
 
-/* Link Aktif (Gaya Konsisten dengan Admin) */
+/* Link Aktif (Gaya Admin) */
 .sidebar a.active {
     background-color: rgba(0, 0, 0, 0.15); 
-    /* Garis tebal vertikal di kiri */
     border-left: 5px solid white; 
-    padding-left: 15px; /* Sesuaikan padding */
+    padding-left: 15px; 
 }
 
-/* --- 5. GAYA FOOTER (LOGOUT) --- */
+/* Footer (Logout) */
 .sidebar-footer {
     padding: 10px 0 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -102,10 +100,157 @@ body {
 }
 
 .btn-logout:hover {
-    background-color: #c0392b; /* Merah untuk hover logout */
+    background-color: #c0392b; 
 }
 
-/* Penyesuaian ikon di tombol logout */
-.btn-logout .sidebar-icon {
-    margin-right: 8px;
+/* Main Content */
+.main-content {
+    flex-grow: 1; /* Mengisi sisa ruang */
+    padding: 30px; 
+    background-color: #f4f7f9; /* Latar belakang sama dengan body */
+}
+
+/* Header Konten */
+.page-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+.page-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #34495e; 
+}
+.header-icon-title {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    color: #038472;
+}
+
+/* Content Panel dan Alert */
+.content-panel {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.alert.alert-error {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #e74c3c;
+    background-color: #fddede;
+    color: #c0392b;
+    border-radius: 4px;
+}
+
+
+/* ==================================== */
+/* 2. TABLE & BUTTON STYLING            */
+/* ==================================== */
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+table thead th {
+    background-color: #ecf0f1;
+    color: #34495e;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.text-center {
+    text-align: center;
+}
+.text-secondary {
+    color: #95a5a6;
+}
+
+/* Badge Status */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+    color: white; /* Default text color */
+}
+
+/* Warna Badge berdasarkan status ENUM */
+.status-pending {
+    background-color: #f1c40f; /* Emas/Kuning */
+    color: #34495e; 
+}
+.status-washing {
+    background-color: #3498db; /* Biru */
+}
+.status-ironing {
+    background-color: #9b59b6; /* Ungu */
+}
+.status-done {
+    background-color: #2ecc71; /* Hijau (Siap diambil) */
+}
+.status-taken {
+    background-color: #34495e; /* Abu gelap (Sudah diambil) */
+}
+
+
+/* Tombol Aksi */
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.8em;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+.btn-success {
+    background-color: #2ecc71;
+    color: white;
+}
+.btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
 }
