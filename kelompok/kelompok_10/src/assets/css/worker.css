@@ -1,20 +1,15 @@
-/* ==================================== */
-/* 1. BASE LAYOUT & SIDEBAR STYLING     */
-/* ==================================== */
 
-/* Reset Body dan Flex Container */
 body { 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     background-color: #f4f7f9; 
     margin: 0; 
     display: flex; 
-    min-height: 100vh; /* Memastikan body mengisi seluruh viewport */
+    min-height: 100vh;
 }
 
 /* Kontainer Sidebar Utama */
 .sidebar { 
     width: 250px; 
-    /* Warna Admin: Hijau Teal Gelap */
     background-color: #038472; 
     color: white; 
     padding: 20px 0; 
@@ -105,15 +100,16 @@ body {
 
 /* Main Content */
 .main-content {
-    flex-grow: 1; /* Mengisi sisa ruang */
+    flex-grow: 1;
     padding: 30px; 
-    background-color: #f4f7f9; /* Latar belakang sama dengan body */
+    background-color: #f4f7f9;
 }
 
-/* Header Konten */
 .page-header {
     display: flex;
     align-items: center;
+    /* Memisahkan judul ke kiri dan profil ke kanan */
+    justify-content: space-between; 
     margin-bottom: 25px;
     padding-bottom: 10px;
     border-bottom: 2px solid #e0e0e0;
@@ -122,6 +118,9 @@ body {
     margin: 0;
     font-size: 1.8em;
     color: #34495e; 
+    /* Untuk menyelaraskan ikon dan teks judul */
+    display: flex; 
+    align-items: center;
 }
 .header-icon-title {
     width: 24px;
@@ -147,10 +146,43 @@ body {
     border-radius: 4px;
 }
 
+.profile-info {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: white; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-/* ==================================== */
-/* 2. TABLE & BUTTON STYLING            */
-/* ==================================== */
+.profile-info .text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-right: 10px;
+    line-height: 1.2;
+}
+
+.profile-info .username {
+    font-weight: 600;
+    font-size: 0.95em;
+    color: #34495e;
+}
+
+.profile-info .role {
+    font-size: 0.75em;
+    color: #95a5a6;
+}
+
+.profile-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ecf0f1; 
+    color: #038472; 
+    padding: 3px;
+    display: block;
+}
 
 .table-responsive {
     overflow-x: auto;
@@ -195,25 +227,25 @@ table tbody tr:hover {
     font-size: 0.8em;
     font-weight: bold;
     text-align: center;
-    color: white; /* Default text color */
+    color: white;
 }
 
 /* Warna Badge berdasarkan status ENUM */
 .status-pending {
-    background-color: #f1c40f; /* Emas/Kuning */
+    background-color: #f1c40f;
     color: #34495e; 
 }
 .status-washing {
-    background-color: #3498db; /* Biru */
+    background-color: #3498db;
 }
 .status-ironing {
-    background-color: #9b59b6; /* Ungu */
+    background-color: #9b59b6;
 }
 .status-done {
-    background-color: #2ecc71; /* Hijau (Siap diambil) */
+    background-color: #2ecc71;
 }
 .status-taken {
-    background-color: #34495e; /* Abu gelap (Sudah diambil) */
+    background-color: #34495e;
 }
 
 

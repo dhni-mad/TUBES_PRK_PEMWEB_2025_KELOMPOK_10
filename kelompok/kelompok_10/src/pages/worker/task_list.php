@@ -1,11 +1,14 @@
 <?php
-// Tentukan halaman aktif untuk penandaan di sidebar
+
 $active_page = 'task_list';
 
-// 1. Sertakan koneksi database. File ini akan mendefinisikan $conn.
+$worker_id = 3; 
+$worker_name = "Syandra"; 
+$worker_role = "Petugas"; 
+
+
 require_once __DIR__ . '/../../config/database.php';
 
-// 2. Query untuk mengambil daftar tugas aktif (Hanya yang masih dalam proses: Pending, Washing, Ironing)
 $query = "
     SELECT 
         t.id, t.nama_pelanggan, p.nama_paket, t.berat_qty, t.status_laundry, t.tgl_masuk
@@ -27,9 +30,6 @@ if ($tasks === false) {
 } else {
     $error_message = null;
 }
-
-// ASUMSI: ID Petugas (Worker ID) didapatkan dari sesi login
-$worker_id = 3; 
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -44,8 +44,25 @@ $worker_id = 3;
 
     <div class="main-content">
         <header class="page-header">
-            <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-icon-title"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> Daftar Tugas Aktif</h2>
-        </header>
+            <h2>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-icon-title">
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                </svg> 
+                Daftar Tugas Aktif
+            </h2>
+            
+            <div class="profile-info">
+                <div class="text">
+                    <span class="username"><?php echo htmlspecialchars($worker_name); ?></span>
+                    <span class="role"><?php echo htmlspecialchars($worker_role); ?></span>
+                </div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="profile-icon">
+                    <path d="M5.52 19c.4-.82.8-1.64 1.2-2.46l.48-.96c.07-.13.15-.24.23-.35.48-.6.94-1.2 1.4-1.8H14.8c.46.6  .92 1.2 1.4 1.8.08.11.16.22.23.35l.48.96c.4.82.8 1.64 1.2 2.46"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            </header>
 
         <div class="content-panel">
             <?php if (!empty($error_message)): ?>
@@ -122,7 +139,7 @@ $worker_id = 3;
                         <?php else: ?>
                             <tr>
                                 <td colspan="7" class="text-center" style="padding: 20px;">
-                                    <p>🎉 Tidak ada tugas cucian aktif saat ini. Anda bisa istirahat sebentar!</p>
+                                    <p> Tidak ada tugas cucian aktif saat ini. Anda bisa istirahat sebentar!</p>
                                 </td>
                             </tr>
                         <?php endif; ?>
