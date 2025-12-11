@@ -1,0 +1,267 @@
+/* ========================================
+   ZIRA LAUNDRY - CASHIER PAGES STYLES
+   ======================================== */
+/* ========================================
+   1. ROOT VARIABLES & RESET
+   ======================================== */
+:root {
+    --main-color: #038472;
+    --main-dark: #026c5f;
+}
+body {
+    background-color: #eef4f3;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+}
+/* ========================================
+   2. LAYOUT - CONTENT AREA
+   ======================================== */
+.content-area {
+    margin-left: 0 !important;
+    padding: 30px;
+    width: calc(100% - 250px);
+}
+/* ========================================
+   3. PAGE HEADER
+   ======================================== */
+.page-header {
+    background: var(--main-color);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+/* ========================================
+   4. PROFILE INFO (Top Right)
+   ======================================== */
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.profile-info .text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+.profile-info .username {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+}
+.profile-info .role {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+.profile-icon {
+    width: 36px;
+    height: 36px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    padding: 6px;
+}
+/* ========================================
+   5. CARD COMPONENTS
+   ======================================== */
+.card {
+    width: 100%;
+}
+.card-header {
+    background-color: var(--main-color) !important;
+    color: white !important;
+    font-weight: 600;
+}
+/* ========================================
+   6. STATUS BADGES
+   ======================================== */
+.badge-status {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: white;
+}
+.pending { 
+    background: #ffc107 !important; 
+    color: black !important; 
+}
+.washing { 
+    background: #0dcaf0 !important; 
+}
+.ironing { 
+    background: #6f42c1 !important; 
+}
+.done { 
+    background: #198754 !important; 
+}
+.taken { 
+    background: #6c757d !important; 
+}
+.unpaid { 
+    background: #dc3545 !important; 
+}
+.paid { 
+    background: #198754 !important; 
+}
+/* ========================================
+   7. BUTTONS
+   ======================================== */
+.btn-teal {
+    background-color: var(--main-color);
+    border-color: var(--main-dark);
+    color: white;
+}
+.btn-teal:hover {
+    background-color: var(--main-dark);
+}
+.btn-success {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-dark) !important;
+}
+.btn-success:hover {
+    background-color: var(--main-dark) !important;
+}
+.btn-print {
+    background: var(--main-color);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 15px;
+    width: 100%;
+}
+.btn-print:hover {
+    background: var(--main-dark);
+}
+/* ========================================
+   8. THERMAL RECEIPT STYLES (Invoice Print)
+   ======================================== */
+.receipt {
+    width: 350px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+    font-size: 13px;
+    line-height: 1.4;
+    font-family: 'Courier New', monospace;
+}
+.receipt-header {
+    text-align: center;
+    border-bottom: 2px dashed #333;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+.receipt-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+.receipt-header p {
+    margin: 2px 0;
+    font-size: 11px;
+}
+.receipt-body {
+    margin-bottom: 15px;
+}
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+.receipt-row.bold {
+    font-weight: bold;
+    font-size: 14px;
+}
+.receipt-divider {
+    border-top: 1px dashed #333;
+    margin: 10px 0;
+}
+.receipt-divider.thick {
+    border-top: 2px solid #333;
+}
+.receipt-item {
+    margin: 8px 0;
+}
+.receipt-total {
+    border-top: 2px solid #333;
+    padding-top: 8px;
+    margin-top: 10px;
+}
+.receipt-footer {
+    text-align: center;
+    border-top: 2px dashed #333;
+    padding-top: 10px;
+    margin-top: 15px;
+    font-size: 11px;
+}
+.barcode {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 10px 0;
+    font-family: 'Courier New', monospace;
+}
+.status-paid {
+    background: #d4edda;
+    color: #155724;
+}
+.status-unpaid {
+    background: #f8d7da;
+    color: #721c24;
+}
+/* ========================================
+   9. PRINT STYLES
+   ======================================== */
+@media print {
+    body {
+        background: white;
+    }
+    .sidebar {
+        display: none !important;
+    }
+    .content-area {
+        width: 100%;
+        padding: 0;
+    }
+    .receipt {
+        box-shadow: none;
+        border: none;
+        width: 80mm;
+    }
+    .btn-print {
+        display: none;
+    }
+}
+/* ========================================
+   10. RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    .content-area {
+        width: 100%;
+        padding: 15px;
+    }
+    .page-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    .profile-info {
+        width: 100%;
+        justify-content: center;
+    }
+    .receipt {
+        width: 100%;
+        max-width: 350px;
+    }
+}

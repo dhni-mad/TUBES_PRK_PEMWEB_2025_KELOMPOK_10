@@ -1,0 +1,311 @@
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: #f4f7f9; 
+    margin: 0; 
+    display: flex; 
+    min-height: 100vh;
+}
+.sidebar { 
+    width: 250px; 
+    background-color: #038472; 
+    color: white; 
+    padding: 20px 0; 
+    position: sticky; 
+    top: 0; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    font-size: 0.95em; 
+}
+.sidebar-header {
+    text-align: center;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+}
+.sidebar-header h1 {
+    margin: 5px 0 0;
+    font-size: 1.5em; 
+    font-weight: 600;
+}
+.role-caption {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8em;
+    margin: 0;
+}
+.header-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+.sidebar nav {
+    flex-grow: 1; 
+}
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s, border-left 0.3s;
+}
+.sidebar a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.sidebar-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+}
+.sidebar a.active {
+    background-color: rgba(0, 0, 0, 0.15); 
+    border-left: 5px solid white; 
+    padding-left: 15px; 
+}
+.sidebar-footer {
+    padding: 10px 0 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-logout {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 12px 20px;
+    transition: background-color 0.3s;
+}
+.btn-logout:hover {
+    background-color: #c0392b; 
+}
+.main-content {
+    flex-grow: 1;
+    padding: 30px; 
+    background-color: #f4f7f9;
+}
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+.page-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #34495e; 
+    display: flex; 
+    align-items: center;
+}
+.header-icon-title {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    color: #038472;
+}
+.content-panel {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.alert.alert-error {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #e74c3c;
+    background-color: #fddede;
+    color: #c0392b;
+    border-radius: 4px;
+}
+.profile-info {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: white; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.profile-info .text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-right: 10px;
+    line-height: 1.2;
+}
+.profile-info .username {
+    font-weight: 600;
+    font-size: 0.95em;
+    color: #34495e;
+}
+.profile-info .role {
+    font-size: 0.75em;
+    color: #95a5a6;
+}
+.profile-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ecf0f1; 
+    color: #038472; 
+    padding: 3px;
+    display: block;
+}
+.table-responsive {
+    overflow-x: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+table thead th {
+    background-color: #ecf0f1;
+    color: #34495e;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+.text-center {
+    text-align: center;
+}
+.text-secondary {
+    color: #95a5a6;
+}
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+.status-pending {
+    background-color: #f1c40f;
+    color: #34495e; 
+}
+.status-washing {
+    background-color: #3498db;
+}
+.status-ironing {
+    background-color: #9b59b6;
+}
+.status-done {
+    background-color: #2ecc71;
+}
+.status-taken {
+    background-color: #34495e;
+}
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.8em;
+}
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+.btn-success {
+    background-color: #2ecc71;
+    color: white;
+}
+.btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+.btn:hover {
+    opacity: 0.9;
+}
+.filter-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.filter-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.filter-group label {
+    font-size: 0.9em;
+    color: #555;
+    font-weight: 500;
+}
+.filter-group select,
+.filter-group input[type="date"] {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95em;
+    min-width: 180px;
+    background: white;
+}
+.custom-date {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.custom-date span {
+    color: #777;
+    font-size: 0.9em;
+}
+.custom-date input {
+    min-width: 150px;
+}
+.btn-filter {
+    padding: 10px 25px;
+    background: #038472;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+.btn-filter:hover {
+    background: #026c5f;
+}
+.btn-reset {
+    padding: 10px 25px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+.btn-reset:hover {
+    background: #5a6268;
+}
