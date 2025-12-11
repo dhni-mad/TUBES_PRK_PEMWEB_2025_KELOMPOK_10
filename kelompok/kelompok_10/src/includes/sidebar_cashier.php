@@ -31,8 +31,8 @@ $active_page = $active_page ?? 'new_transaction';
         </a>
 
         <!-- SEMUA TRANSAKSI -->
-        <a href="transactions_list.php"
-           class="<?= ($active_page === 'transactions_list') ? 'active' : ''; ?>">
+        <a href="transaction_list.php"
+           class="<?= ($active_page === 'transaction_list') ? 'active' : ''; ?>">
             <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
                  stroke-linejoin="round">
@@ -43,8 +43,8 @@ $active_page = $active_page ?? 'new_transaction';
         </a>
 
         <!-- CETAK STRUK -->
-        <a href="print_receipt.php"
-           class="<?= ($active_page === 'print_receipt') ? 'active' : ''; ?>">
+        <a href="invoice_print.php"
+           class="<?= ($active_page === 'invoice_print') ? 'active' : ''; ?>">
             <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
                  stroke-linejoin="round">

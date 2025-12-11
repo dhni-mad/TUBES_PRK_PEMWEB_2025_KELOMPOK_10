@@ -1,5 +1,4 @@
 <?php
-// Load config database
 $baseDir = dirname(__DIR__, 2);
 
 $configPaths = [
@@ -23,15 +22,16 @@ foreach ($configPaths as $path) {
 if (!$configLoaded) die("Config database tidak ditemukan!");
 if (!isset($conn)) die("Variabel \$conn tidak tersedia!");
 
-// Ambil semua transaksi
 $query = mysqli_query($conn, "
     SELECT t.*, p.nama_paket
     FROM transactions t
     JOIN packages p ON t.package_id = p.id
     ORDER BY t.tgl_masuk DESC
 ");
-?>
 
+$active_page = "transaction_list";
+
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -48,10 +48,16 @@ $query = mysqli_query($conn, "
         body {
             background-color: #eef4f3;
             font-family: 'Segoe UI', sans-serif;
-            padding: 35px;
+            margin: 0;
+            display: flex;
         }
 
-        /* Header Halaman */
+        .content-area {
+            margin-left: 0%px !important;
+            padding: 30px;
+            width: calc(100% - 250px);
+        }
+
         .page-header {
             background: var(--main-color);
             color: white;
@@ -65,16 +71,12 @@ $query = mysqli_query($conn, "
             gap: 10px;
         }
 
-        /* Header Card */
         .card-header {
             background-color: var(--main-color) !important;
             color: white !important;
             font-weight: 600;
-            font-size: 1rem;
-            padding: 12px 20px;
         }
 
-        /* Badge Status Laundry */
         .badge-status {
             padding: 6px 10px;
             border-radius: 6px;
@@ -87,17 +89,14 @@ $query = mysqli_query($conn, "
         .done    { background: #198754 !important; }
         .taken   { background: #6c757d !important; }
 
-        /* Badge Status Bayar */
         .unpaid { background: #dc3545 !important; }
         .paid   { background: #198754 !important; }
 
-        /* Tombol Hijau Teal */
         .btn-teal {
             background-color: var(--main-color);
             border-color: var(--main-dark);
             color: white;
         }
-
         .btn-teal:hover {
             background-color: var(--main-dark);
         }
@@ -106,77 +105,77 @@ $query = mysqli_query($conn, "
 
 <body>
 
-<!-- HEADER HALAMAN -->
-<div class="page-header">
-    📄 Daftar Transaksi Laundry
-</div>
+<?php include $baseDir . "/includes/sidebar_cashier.php"; ?>
 
-<!-- CARD TABEL -->
-<div class="card shadow-sm">
-    <div class="card-header">
-        Semua Transaksi
+<div class="content-area">
+
+    <div class="page-header">
+        📄 Daftar Transaksi Laundry
     </div>
 
-    <div class="card-body">
-        <table class="table table-bordered table-striped text-center">
-            <thead style="background:#d7efe9;">
-                <tr>
-                    <th>ID</th>
-                    <th>Pelanggan</th>
-                    <th>Paket</th>
-                    <th>Total Harga</th>
-                    <th>Status Laundry</th>
-                    <th>Status Bayar</th>
-                    <th>Masuk</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
+    <div class="card shadow-sm">
+        <div class="card-header">Semua Transaksi</div>
 
-            <tbody>
-            <?php while ($row = mysqli_fetch_assoc($query)) : ?>
-                <tr>
-                    <td><?= $row['id']; ?></td>
-                    <td><?= $row['nama_pelanggan']; ?></td>
-                    <td><?= $row['nama_paket']; ?></td>
-                    <td>Rp<?= number_format($row['total_harga']); ?></td>
+        <div class="card-body">
 
-                    <!-- Status Laundry -->
-                    <td>
-                        <span class="badge-status <?= strtolower($row['status_laundry']); ?>">
-                            <?= $row['status_laundry']; ?>
-                        </span>
-                    </td>
+            <table class="table table-bordered table-striped text-center">
+                <thead style="background:#d7efe9;">
+                    <tr>
+                        <th>ID</th>
+                        <th>Pelanggan</th>
+                        <th>Paket</th>
+                        <th>Total Harga</th>
+                        <th>Status Laundry</th>
+                        <th>Status Bayar</th>
+                        <th>Masuk</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
 
-                    <!-- Status Pembayaran -->
-                    <td>
-                        <span class="badge-status <?= strtolower($row['status_bayar']); ?>">
-                            <?= $row['status_bayar']; ?>
-                        </span>
-                    </td>
+                <tbody>
+                <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                    <tr>
+                        <td><?= $row['id']; ?></td>
+                        <td><?= $row['nama_pelanggan']; ?></td>
+                        <td><?= $row['nama_paket']; ?></td>
+                        <td>Rp<?= number_format($row['total_harga']); ?></td>
 
-                    <td><?= date("d/m/Y H:i", strtotime($row['tgl_masuk'])); ?></td>
+                        <!-- Status Laundry -->
+                        <td>
+                            <span class="badge-status <?= strtolower($row['status_laundry']); ?>">
+                                <?= $row['status_laundry']; ?>
+                            </span>
+                        </td>
 
-                    <td>
-                        <!-- Cetak Struk -->
-                        <a href="invoice_print.php?id=<?= $row['id']; ?>" 
-                           class="btn btn-teal btn-sm mb-1">
-                            🧾 Struk
-                        </a>
+                        <!-- Status Pembayaran -->
+                        <td>
+                            <span class="badge-status <?= strtolower($row['status_bayar']); ?>">
+                                <?= $row['status_bayar']; ?>
+                            </span>
+                        </td>
 
-                        <!-- Ambil Cucian -->
-                        <?php if ($row['status_laundry'] !== 'Taken'): ?>
-                        <a href="take_laundry.php?id=<?= $row['id']; ?>"
-                           class="btn btn-warning btn-sm">
-                            ✔ Ambil
-                        </a>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-            </tbody>
+                        <td><?= date("d/m/Y H:i", strtotime($row['tgl_masuk'])); ?></td>
 
-        </table>
+                        <td>
+                            <a href="invoice_print.php?id=<?= $row['id']; ?>" class="btn btn-teal btn-sm mb-1">
+                                🧾 Struk
+                            </a>
+
+                            <?php if ($row['status_laundry'] !== 'Taken'): ?>
+                                <a href="take_laundry.php?id=<?= $row['id']; ?>" class="btn btn-warning btn-sm">
+                                    ✔ Ambil
+                                </a>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+                </tbody>
+
+            </table>
+
+        </div>
     </div>
+
 </div>
 
 </body>
