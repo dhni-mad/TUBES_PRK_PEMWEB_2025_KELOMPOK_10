@@ -129,6 +129,6 @@ Antrean cucian yang harus segera diproses (Cuci/Setrika).
 Daftar cucian yang telah selesai dikerjakan oleh petugas tersebut.
 <img src="src/assets/img/worker_history.png" alt="Worker History" width="800">
 
-*(Catatan: Tampilan antarmuka mungkin sedikit berbeda tergantung pada resolusi layar dan browser yang digunakan).*
+
 
 ---
