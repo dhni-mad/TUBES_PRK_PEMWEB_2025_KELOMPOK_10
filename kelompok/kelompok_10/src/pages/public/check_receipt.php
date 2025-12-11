@@ -16,8 +16,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             $conn = getConnection();
             
-            // Query untuk cari transaction berdasarkan ID (nomor resi)
-            $query = "SELECT id, nama_pelanggan, no_hp, package_id, berat_qty, total_harga, status_laundry, status_bayar, tgl_masuk, tgl_estimasi_selesai, tgl_selesai FROM transactions WHERE id = ?";
+            // Query untuk cari transaction dengan detail lengkap
+            $query = "SELECT 
+                        t.id,
+                        t.nama_pelanggan,
+                        t.no_hp,
+                        t.berat_qty,
+                        t.total_harga,
+                        t.status_laundry,
+                        t.status_bayar,
+                        t.tgl_masuk,
+                        t.tgl_estimasi_selesai,
+                        t.tgl_selesai,
+                        t.catatan,
+                        p.nama_paket,
+                        p.harga_per_qty,
+                        p.satuan,
+                        p.estimasi_hari,
+                        u_kasir.full_name as kasir_nama
+                      FROM transactions t
+                      JOIN packages p ON t.package_id = p.id
+                      LEFT JOIN users u_kasir ON t.kasir_input_id = u_kasir.id
+                      WHERE t.id = ?
+                      LIMIT 1";
             $stmt = $conn->prepare($query);
             
             if (!$stmt) {
@@ -30,6 +51,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             if ($result->num_rows > 0) {
                 $search_result = $result->fetch_assoc();
+                
+                // Ambil history status dari status_logs
+                $status_query = "SELECT 
+                                    sl.status_after as status,
+                                    sl.created_at as changed_at,
+                                    u.full_name as changed_by
+                                 FROM status_logs sl
+                                 LEFT JOIN users u ON sl.changed_by = u.id
+                                 WHERE sl.transaction_id = ?
+                                 ORDER BY sl.created_at ASC";
+                $status_stmt = $conn->prepare($status_query);
+                $status_stmt->bind_param("s", $receipt_number);
+                $status_stmt->execute();
+                $status_history = $status_stmt->get_result();
+                $search_result['status_history'] = $status_history->fetch_all(MYSQLI_ASSOC);
+                $status_stmt->close();
             } else {
                 $search_error = 'Nomor resi tidak ditemukan. Silakan periksa kembali nomor Anda.';
             }
@@ -72,6 +109,7 @@ function getStatusColor($status) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $page_title; ?> - E-LAUNDRY</title>
+    <link rel="stylesheet" href="../../assets/css/public.css?v=<?php echo time(); ?>">
     <style>
         * {
             margin: 0;
@@ -86,70 +124,6 @@ function getStatusColor($status) {
             line-height: 1.6;
             min-height: 100vh;
         }
-
-        /* Header */
-        header {
-            background-color: #008080;
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-        }
-
-        .logo-text h1 {
-            font-size: 1.2rem;
-            margin: 0;
-            letter-spacing: 0.5px;
-            font-weight: 700;
-        }
-
-        .logo-text p {
-            font-size: 0.65rem;
-            margin: 0.1rem 0 0 0;
-            opacity: 0.9;
-            letter-spacing: 0.8px;
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        /* Styling button Kembali Beranda di header - VERSI PUTIH */
-    .header-nav a {
-        color: #008080; /* Warna teks hijau tua */
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        padding: 10px 20px;
-        border-radius: 25px;
-        background-color: white; /* Background putih */
-        border: 2px solid white;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        display: inline-block;
-    }
-
-    .header-nav a:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        background-color: #f8f9fa; /* Putih sedikit gelap saat hover */
-        border-color: #f8f9fa;
-        color: #008080; /* Tetap hijau tua */
-    }
 
         /* Container */
         .container {
@@ -490,17 +464,7 @@ function getStatusColor($status) {
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="logo-section">
-            <div class="logo-text">
-                <h1>E-LAUNDRY</h1>
-                <p>PROFESSIONAL LAUNDRY SERVICE</p>
-            </div>
-        </div>
-        <nav class="header-nav">
-            <a href="index.php">Kembali ke Beranda</a>
-        </nav>
-    </header>
+    <?php include '../../includes/header_public.php'; ?>
 
     <!-- Main Container -->
     <div class="container">
@@ -556,16 +520,32 @@ function getStatusColor($status) {
                 <h4>Detail Layanan</h4>
                 <div class="detail-row">
                     <span class="detail-label">Paket Layanan:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($search_result['package_id']); ?></span>
+                    <span class="detail-value"><strong><?php echo htmlspecialchars($search_result['nama_paket']); ?></strong></span>
                 </div>
                 <div class="detail-row">
-                    <span class="detail-label">Berat (Qty):</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($search_result['berat_qty']); ?> kg</span>
+                    <span class="detail-label">Harga per <?php echo htmlspecialchars($search_result['satuan']); ?>:</span>
+                    <span class="detail-value">Rp <?php echo number_format($search_result['harga_per_qty'], 0, ',', '.'); ?></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Jumlah:</span>
+                    <span class="detail-value"><?php echo number_format($search_result['berat_qty'], 1, ',', '.'); ?> <?php echo htmlspecialchars($search_result['satuan']); ?></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Total Harga:</span>
-                    <span class="detail-value"><strong>Rp <?php echo number_format($search_result['total_harga'], 0, ',', '.'); ?></strong></span>
+                    <span class="detail-value"><strong style="color: #008080; font-size: 1.1em;">Rp <?php echo number_format($search_result['total_harga'], 0, ',', '.'); ?></strong></span>
                 </div>
+                <?php if (!empty($search_result['catatan'])): ?>
+                <div class="detail-row">
+                    <span class="detail-label">Catatan:</span>
+                    <span class="detail-value"><?php echo nl2br(htmlspecialchars($search_result['catatan'])); ?></span>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($search_result['kasir_nama'])): ?>
+                <div class="detail-row">
+                    <span class="detail-label">Diinput oleh:</span>
+                    <span class="detail-value"><?php echo htmlspecialchars($search_result['kasir_nama']); ?> (Kasir)</span>
+                </div>
+                <?php endif; ?>
             </div>
 
             <!-- Status Information -->
@@ -579,11 +559,17 @@ function getStatusColor($status) {
                         </span>
                     </span>
                 </div>
+                <?php if (!empty($search_result['worker_nama'])): ?>
+                <div class="detail-row">
+                    <span class="detail-label">Dikerjakan oleh:</span>
+                    <span class="detail-value"><?php echo htmlspecialchars($search_result['worker_nama']); ?> (Petugas)</span>
+                </div>
+                <?php endif; ?>
                 <div class="detail-row">
                     <span class="detail-label">Status Pembayaran:</span>
                     <span class="detail-value">
-                        <span class="status-badge <?php echo ($search_result['status_bayar'] == 'Success') ? 'payment-success' : 'payment-pending'; ?>">
-                            <?php echo htmlspecialchars($search_result['status_bayar']); ?>
+                        <span class="status-badge <?php echo ($search_result['status_bayar'] == 'Paid') ? 'payment-success' : 'payment-pending'; ?>">
+                            <?php echo ($search_result['status_bayar'] == 'Paid') ? 'Lunas' : 'Belum Lunas'; ?>
                         </span>
                     </span>
                 </div>
@@ -594,19 +580,41 @@ function getStatusColor($status) {
                 <h4>Jadwal</h4>
                 <div class="detail-row">
                     <span class="detail-label">Tanggal Masuk:</span>
-                    <span class="detail-value"><?php echo date('d-m-Y H:i', strtotime($search_result['tgl_masuk'])); ?></span>
+                    <span class="detail-value"><?php echo date('d F Y, H:i', strtotime($search_result['tgl_masuk'])); ?> WIB</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Estimasi Selesai:</span>
-                    <span class="detail-value"><?php echo date('d-m-Y H:i', strtotime($search_result['tgl_estimasi_selesai'])); ?></span>
+                    <span class="detail-value"><strong><?php echo date('d F Y, H:i', strtotime($search_result['tgl_estimasi_selesai'])); ?> WIB</strong> (<?php echo htmlspecialchars($search_result['estimasi_hari']); ?> hari)</span>
                 </div>
-                <?php if ($search_result['tgl_selesai']): ?>
+                <?php if (!empty($search_result['tgl_selesai'])): ?>
                 <div class="detail-row">
                     <span class="detail-label">Tanggal Selesai:</span>
-                    <span class="detail-value"><?php echo date('d-m-Y H:i', strtotime($search_result['tgl_selesai'])); ?></span>
+                    <span class="detail-value" style="color: #28a745; font-weight: 600;"><?php echo date('d F Y, H:i', strtotime($search_result['tgl_selesai'])); ?> WIB</span>
                 </div>
                 <?php endif; ?>
             </div>
+
+            <!-- Status History Timeline -->
+            <?php if (!empty($search_result['status_history'])): ?>
+            <div class="detail-group">
+                <h4>Riwayat Status</h4>
+                <?php foreach ($search_result['status_history'] as $history): ?>
+                <div class="detail-row">
+                    <span class="detail-label">
+                        <span class="status-badge" style="background-color: <?php echo getStatusColor($history['status']); ?>; font-size: 0.8em;">
+                            <?php echo getStatusLabel($history['status']); ?>
+                        </span>
+                    </span>
+                    <span class="detail-value" style="font-size: 0.9em;">
+                        <?php echo date('d/m/Y H:i', strtotime($history['changed_at'])); ?>
+                        <?php if (!empty($history['changed_by'])): ?>
+                            <br><small>oleh <?php echo htmlspecialchars($history['changed_by']); ?></small>
+                        <?php endif; ?>
+                    </span>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
 
             <!-- Progress Steps -->
             <div class="progress-section">

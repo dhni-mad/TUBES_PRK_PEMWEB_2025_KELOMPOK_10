@@ -60,7 +60,7 @@ $active_page = $active_page ?? 'new_transaction';
     </nav>
 
     <div class="sidebar-footer">
-        <a href="../auth/logout.php" class="btn-logout">
+        <a href="../../process/auth_handler.php?action=logout" class="btn-logout">
             <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
                  stroke-linejoin="round" style="margin-right: 8px;">

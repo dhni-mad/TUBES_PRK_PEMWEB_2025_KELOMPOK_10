@@ -67,3 +67,26 @@ header {
 .btn-login-employee svg {
     flex-shrink: 0;
 }
+
+/* Button Back to Home */
+.btn-back-home {
+    background: white;
+    color: #008080;
+    padding: 10px 20px;
+    border: 2px solid white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-back-home:hover {
+    background: #f8f9fa;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}

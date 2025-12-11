@@ -1,4 +1,16 @@
 <?php
+session_start();
+
+// Cek apakah user sudah login dan rolenya kasir
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'kasir') {
+    header('Location: ../auth/login.php');
+    exit();
+}
+
+// Ambil data user yang login dari session
+$cashier_id = $_SESSION['user_id']; 
+$cashier_name = $_SESSION['full_name']; 
+$cashier_role = "Kasir";
 
 $baseDir = dirname(__DIR__, 2);
 
@@ -69,8 +81,42 @@ $active_page = 'new_transaction';
             border-radius: 10px;
             font-size: 22px;
             font-weight: 600;
-            display: inline-block;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 25px;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-info .text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .profile-info .username {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .profile-info .role {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .profile-icon {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            padding: 6px;
         }
 
         .card {
@@ -100,8 +146,32 @@ $active_page = 'new_transaction';
 <div class="content-area">
 
     <div class="page-header">
-        🧺 Form Terima Cucian
+        <span>🧺 Form Terima Cucian</span>
+        <div class="profile-info">
+            <div class="text">
+                <span class="username"><?php echo htmlspecialchars($cashier_name); ?></span>
+                <span class="role"><?php echo htmlspecialchars($cashier_role); ?></span>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="profile-icon">
+                <path d="M5.52 19c.4-.82.8-1.64 1.2-2.46l.48-.96c.07-.13.15-.24.23-.35.48-.6.94-1.2 1.4-1.8H14.8c.46.6  .92 1.2 1.4 1.8.08.11.16.22.23.35l.48.96c.4.82.8 1.64 1.2 2.46"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </div>
     </div>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
 
     <div class="card shadow-sm">
         <div class="card-header">
@@ -110,7 +180,7 @@ $active_page = 'new_transaction';
 
         <div class="card-body">
 
-            <form action="../../process/new_transaction_process.php" method="POST">
+            <form action="../../process/transaction_handler.php?action=create" method="POST">
 
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -165,5 +235,6 @@ $active_page = 'new_transaction';
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

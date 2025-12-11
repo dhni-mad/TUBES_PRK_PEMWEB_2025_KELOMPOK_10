@@ -82,7 +82,7 @@ CREATE TABLE payment_history (
     id INT AUTO_INCREMENT PRIMARY KEY,
     transaction_id VARCHAR(20) NOT NULL,
     jumlah_bayar DECIMAL(12, 2) NOT NULL,
-    metode_bayar ENUM('Cash', 'Transfer', 'E-Wallet') DEFAULT 'Cash',
+    metode_bayar ENUM('Tunai', 'QRIS', 'Transfer', 'E-Wallet') DEFAULT 'Tunai',
     kasir_id INT NOT NULL,
     catatan VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

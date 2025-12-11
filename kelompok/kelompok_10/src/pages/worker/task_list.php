@@ -1,9 +1,17 @@
 <?php
+session_start();
+
+// Cek apakah user sudah login dan rolenya worker
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'worker') {
+    header('Location: ../auth/login.php');
+    exit();
+}
 
 $active_page = 'task_list';
 
-$worker_id = 3; 
-$worker_name = "Syandra"; 
+// Ambil data user yang login dari session
+$worker_id = $_SESSION['user_id']; 
+$worker_name = $_SESSION['full_name']; 
 $worker_role = "Petugas"; 
 
 
