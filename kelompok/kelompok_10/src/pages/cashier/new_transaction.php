@@ -1,7 +1,4 @@
 <?php
-// =======================
-// 1. LOAD CONFIG DATABASE
-// =======================
 
 $baseDir = dirname(__DIR__, 2);
 
@@ -30,9 +27,6 @@ if (!isset($conn)) {
     die('Variabel $conn tidak ditemukan. Pastikan config berisi $conn = mysqli_connect(...);');
 }
 
-// =======================
-// 2. QUERY PAKET LAUNDRY
-// =======================
 $paketQuery = mysqli_query($conn, "SELECT * FROM packages ORDER BY nama_paket ASC");
 if (!$paketQuery) {
     die("Query paket gagal: " . mysqli_error($conn));
@@ -62,16 +56,12 @@ $active_page = 'new_transaction';
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* =========================== */
-        /* AREA KONTEN FULL WIDTH */
-        /* =========================== */
         .content-area {
-            margin-left: 0%px; /* sidebar width */
+            margin-left: 0%px; 
             padding: 30px;
-            width: calc(100% - 250px); /* form kini memakai seluruh ruang kanan */
+            width: calc(100% - 250px); 
         }
 
-        /* JUDUL HALAMAN */
         .page-header {
             background-color: var(--main-color);
             color: #fff;
@@ -83,7 +73,6 @@ $active_page = 'new_transaction';
             margin-bottom: 25px;
         }
 
-        /* CARD FULL WIDTH */
         .card {
             width: 100%;
         }
@@ -108,16 +97,12 @@ $active_page = 'new_transaction';
 
 <?php include $baseDir . '/includes/sidebar_cashier.php'; ?>
 
-<!-- ======================= -->
-<!--       MAIN CONTENT      -->
-<!-- ======================= -->
 <div class="content-area">
 
     <div class="page-header">
         🧺 Form Terima Cucian
     </div>
 
-    <!-- CARD FULL WIDTH -->
     <div class="card shadow-sm">
         <div class="card-header">
             Input Transaksi Baru
@@ -127,7 +112,6 @@ $active_page = 'new_transaction';
 
             <form action="../../process/new_transaction_process.php" method="POST">
 
-                <!-- ROW 1 -->
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Nama Pelanggan</label>
@@ -140,13 +124,11 @@ $active_page = 'new_transaction';
                     </div>
                 </div>
 
-                <!-- ROW 2 -->
                 <div class="mb-3">
                     <label class="form-label">Alamat (Opsional)</label>
                     <textarea name="alamat" class="form-control" rows="2"></textarea>
                 </div>
 
-                <!-- ROW 3 -->
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Paket Laundry</label>
@@ -166,7 +148,6 @@ $active_page = 'new_transaction';
                     </div>
                 </div>
 
-                <!-- ROW 4 -->
                 <div class="mb-3">
                     <label class="form-label">Catatan (Opsional)</label>
                     <textarea name="catatan" class="form-control" rows="2"></textarea>

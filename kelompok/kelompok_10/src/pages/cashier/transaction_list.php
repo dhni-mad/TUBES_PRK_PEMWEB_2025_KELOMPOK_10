@@ -1,7 +1,4 @@
 <?php
-// ========================
-// LOAD CONFIG DATABASE
-// ========================
 $baseDir = dirname(__DIR__, 2);
 
 $configPaths = [
@@ -25,9 +22,6 @@ foreach ($configPaths as $path) {
 if (!$configLoaded) die("Config database tidak ditemukan!");
 if (!isset($conn)) die("Variabel \$conn tidak tersedia!");
 
-// ========================
-// AMBIL SEMUA TRANSAKSI
-// ========================
 $query = mysqli_query($conn, "
     SELECT t.*, p.nama_paket
     FROM transactions t
@@ -58,16 +52,12 @@ $active_page = "transaction_list";
             display: flex;
         }
 
-        /* ============================
-           SIDEBAR (fix width 250px)
-        ============================ */
         .content-area {
             margin-left: 0%px !important;
             padding: 30px;
             width: calc(100% - 250px);
         }
 
-        /* Header Halaman */
         .page-header {
             background: var(--main-color);
             color: white;
@@ -81,14 +71,12 @@ $active_page = "transaction_list";
             gap: 10px;
         }
 
-        /* Card Header */
         .card-header {
             background-color: var(--main-color) !important;
             color: white !important;
             font-weight: 600;
         }
 
-        /* Badge Status */
         .badge-status {
             padding: 6px 10px;
             border-radius: 6px;
@@ -117,14 +105,8 @@ $active_page = "transaction_list";
 
 <body>
 
-<!-- ============================
-     LOAD SIDEBAR
-============================ -->
 <?php include $baseDir . "/includes/sidebar_cashier.php"; ?>
 
-<!-- ============================
-       AREA KONTEN
-============================ -->
 <div class="content-area">
 
     <div class="page-header">

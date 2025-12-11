@@ -1,7 +1,4 @@
 <?php
-// ========================
-// LOAD CONFIG DATABASE
-// ========================
 $baseDir = dirname(__DIR__, 2);
 
 $configPaths = [
@@ -30,10 +27,6 @@ if (!isset($conn)) {
     $error_message = "Variabel \$conn tidak ditemukan!";
 }
 
-
-// ========================
-// AMBIL DATA TRANSAKSI
-// ========================
 $transaksi = null;
 
 if (!isset($_GET["id"])) {
@@ -102,24 +95,18 @@ $active_page = "invoice_print";
 
 <body>
 
-<!-- SIDEBAR -->
 <?php include $baseDir . "/includes/sidebar_cashier.php"; ?>
 
-<!-- =============================
-        AREA KONTEN
-============================= -->
 <div class="content-area">
 
 <?php if (isset($error_message)) : ?>
 
-    <!-- TAMPILKAN ERROR TAPI TETAP ADA SIDEBAR -->
     <div class="alert alert-danger">
         <strong>Error:</strong> <?= $error_message; ?>
     </div>
 
 <?php else: ?>
 
-    <!-- STRUK TRANSAKSI -->
     <div class="card shadow-sm" style="max-width: 600px;">
         <div class="card-header">🧾 Struk Transaksi Laundry</div>
 
